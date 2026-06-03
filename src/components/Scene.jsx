@@ -24,27 +24,27 @@ export default function Scene() {
 
       {/* Rim light — cool blue from behind-left, separates watch from bg */}
       <pointLight
-        position={[-5, 3, -5]}
-        intensity={1.4}
+        position={[0, 0, 3]}
+        intensity={7}
         color="#3366cc"
       />
 
       {/* Orange fill — echoes the watch's accent hands */}
       {/* <pointLight
-        position={[3, -1, 4]}
-        intensity={0.5}
+        position={[0, -6, 3]}
+        intensity={5}
         color="#ff6600"
       /> */}
 
       {/* Under fill — lifts the strap slightly */}
-      {/* <pointLight
+      <pointLight
         position={[0, -6, 3]}
-        intensity={0.25}
+        intensity={0.35}
         color="#ffffff"
-      /> */}
+      />
 
       {/* Environment map for metallic case reflections */}
-      <Environment files="/envmap.hdr" />
+      <Environment files="/blue.hdr" intensity={0.02} />
       <Preload all />
 
       <HeroScene />
