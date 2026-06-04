@@ -1,4 +1,5 @@
 import { Canvas } from '@react-three/fiber'
+import { Loader } from '@react-three/drei'
 import { Suspense, useEffect } from 'react'
 import * as THREE from 'three'
 import gsap from 'gsap'
@@ -6,7 +7,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Lenis from 'lenis'
 import Scene from './components/Scene'
 import HeroUI from './components/HeroUI'
-// import './fonts.css'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -16,7 +16,7 @@ export default function App() {
     const lenis = new Lenis()
 
     lenis.on('scroll', ScrollTrigger.update)
-    const tick = (time) => lenis.raf(time * 1000)
+    const tick = (time: number) => lenis.raf(time * 1000)
     gsap.ticker.add(tick)
     gsap.ticker.lagSmoothing(0)
 
@@ -27,36 +27,44 @@ export default function App() {
   }, [])
 
   return (
-    <div className="relative bg-black" style={{ height: '700vh' }}>
+    <>
+    {/* Canvas outside scroll container — truly fixed */}
+    <Canvas
+       style={{
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100vw',
+    height: '100vh',
+    zIndex: 1,
+  }}
+      camera={{ position: [0, 0, 8], fov: 42 }}
+      gl={{ antialias: true }}
+      dpr={Math.min(window.devicePixelRatio, 1.5)}
+      onCreated={({ gl }) => {
+        gl.toneMapping = THREE.ACESFilmicToneMapping
+        gl.toneMappingExposure = 1.1
+        gl.outputColorSpace = THREE.SRGBColorSpace
+      }}
+    >
+      <Suspense fallback={null}>
+        <Scene />
+      </Suspense>
+    </Canvas>
 
-      <Canvas
-        className="fixed top-0 left-0 w-full"
-        style={{ height: '100dvh', zIndex: 1 }}
-        camera={{ position: [0, 0, 8], fov: 42 }}
-        gl={{ antialias: true }}
-        dpr={[1, 2]}
-        shadows
-        onCreated={({ gl }) => {
-          gl.toneMapping = THREE.ACESFilmicToneMapping
-          gl.toneMappingExposure = 1.1
-          gl.outputColorSpace = THREE.SRGBColorSpace
-        }}
-      >
-        <Suspense fallback={null}>
-          <Scene />
-        </Suspense>
-      </Canvas>
+    <Loader />
+    <HeroUI />
 
-      <HeroUI />
-
-      <section id="hero"     className="h-screen pointer-events-none" />
-      <section id="case"     className="h-screen pointer-events-none" />
-      <section id="dial"     className="h-screen pointer-events-none" />
-      <section id="strap"    className="h-screen pointer-events-none" />
-      <section id="explode"  className="h-screen pointer-events-none" />
-      <section id="movement" className="h-screen pointer-events-none" />
-      <section id="cta"      className="h-screen pointer-events-none" />
-
+    {/* Scroll spacers — only purpose is scroll height */}
+    <div className="relative" style={{ height: '850vh' }}>
+      <section id="hero"      className="h-screen pointer-events-none bg-white" />
+      <section id="case"      className="h-screen pointer-events-none" />
+      <section id="dial"      className="h-screen pointer-events-none" />
+      <section id="strap"     className="h-screen pointer-events-none" />
+      <section id="explode"   className="pointer-events-none" style={{ height: '150vh' }} />
+      <section id="gear-zoom" className="pointer-events-none" style={{ height: '200vh' }} />
+      <section id="cta"       className="h-screen pointer-events-none" />
     </div>
+  </>
   )
 }

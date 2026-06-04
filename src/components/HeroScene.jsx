@@ -4,15 +4,14 @@ import gsap from 'gsap'
 import { Model as Watch } from './models/Watch'
 import { useAnimStore } from '../store/animStore'
 
-export default function HeroScene() {
-  const groupRef    = useRef(null)
+export default function HeroScene({ watchRef }) {
   const floatActive = useRef(false)
   const baseY       = useRef(0)
 
   const setHeroAnimComplete = useAnimStore((s) => s.setHeroAnimComplete)
 
   useEffect(() => {
-    if (!groupRef.current) return
+    if (!watchRef.current) return
 
     const isMobile = window.innerWidth < 768
 
@@ -30,26 +29,26 @@ export default function HeroScene() {
     const zoomedRotY   = isMobile ? -0.08    : -0.08
     const zoomedRotZ   = isMobile ? -1.4    : -1.4
     // Set start state
-    gsap.set(groupRef.current.rotation, { y: Math.PI })
-    gsap.set(groupRef.current.scale,    { x: 0.08, y: 0.08, z: 0.08 })
-    gsap.set(groupRef.current.position, { x: 0, y: 0, z: 0 })
+    gsap.set(watchRef.current.rotation, { y: Math.PI })
+    gsap.set(watchRef.current.scale,    { x: 0.08, y: 0.08, z: 0.08 })
+    gsap.set(watchRef.current.position, { x: 0, y: 0, z: 0 })
 
     baseY.current = settledY
 
     gsap.timeline({ delay: 0.4 })
 
       // ── Phase 1: entrance from back ──────────────────────────
-      .to(groupRef.current.rotation, {
+      .to(watchRef.current.rotation, {
         y: settledRotY,
         duration: 2,
         ease: 'power2.inOut'
       }, 0)
-      .to(groupRef.current.position, {
+      .to(watchRef.current.position, {
         x: settledX, y: settledY,
         duration: 2,
         ease: 'power2.inOut'
       }, 0)
-      .to(groupRef.current.scale, {
+      .to(watchRef.current.scale, {
         x: settledScale, y: settledScale, z: settledScale,
         duration: 2,
         ease: 'power2.inOut'
@@ -59,22 +58,22 @@ export default function HeroScene() {
       .call(() => { floatActive.current = true })
 
       // ── 3 second hold ────────────────────────────────────────
-      .to({}, { duration: 1 })
+      .to({}, { duration: 0.2 })
 
       // ── Phase 2: zoom into dial ──────────────────────────────
       // Stop float before zoom so it doesn't fight GSAP
       .call(() => { floatActive.current = false })
-      .to(groupRef.current.scale, {
+      .to(watchRef.current.scale, {
         x: zoomedScale, y: zoomedScale, z: zoomedScale,
         duration: 1.8,
         ease: 'power3.inOut'
       })
-      .to(groupRef.current.position, {
+      .to(watchRef.current.position, {
         x: zoomedX, y: zoomedY,
         duration: 1.8,
         ease: 'power3.inOut'
       }, '<')
-      .to(groupRef.current.rotation, {
+      .to(watchRef.current.rotation, {
         y: zoomedRotY,
         x: zoomedRotX,
         z: zoomedRotZ,
@@ -87,15 +86,19 @@ export default function HeroScene() {
 
   }, [setHeroAnimComplete])
 
+   const floatDisabled = useAnimStore(s => s.floatDisabled)
+
+  // useFrame — add floatDisabled check
   useFrame(({ clock }) => {
-    if (!groupRef.current || !floatActive.current) return
+    if (!watchRef.current || !floatActive.current || floatDisabled) return
     const t = clock.elapsedTime
-    groupRef.current.position.y = baseY.current + Math.sin(t * 0.65) * 0.055
+    watchRef.current.position.y = baseY.current + Math.sin(t * 0.65) * 0.055
   })
 
   return (
-    <group ref={groupRef}>
+    <group ref={watchRef}>
       <Watch />
     </group>
+    
   )
 }

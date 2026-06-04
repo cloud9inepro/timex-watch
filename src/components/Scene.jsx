@@ -1,11 +1,15 @@
 import { Environment, Preload } from '@react-three/drei'
 import HeroScene from './HeroScene'
+import ScrollScene from './ScrollScene'
+import { useRef } from 'react'
 
 export default function Scene() {
+  const watchRef = useRef(null)
+
   return (
     <>
       <color attach="background" args={['#050505']} />
-      <fog attach="fog" args={['#050505', 18, 35]} />
+      {/* <fog attach="fog" args={['#050505', 18, 35]} /> */}
 
       {/* Ambient — barely there, keeps deep shadows */}
       <ambientLight intensity={0.06} />
@@ -47,7 +51,9 @@ export default function Scene() {
       <Environment files="/blue.hdr" intensity={0.02} />
       <Preload all />
 
-      <HeroScene />
+      <HeroScene watchRef={watchRef} />
+      <ScrollScene watchRef={watchRef} />
+
     </>
   )
 }

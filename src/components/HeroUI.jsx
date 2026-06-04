@@ -1,7 +1,9 @@
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { useAnimStore } from '../store/animStore'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
+gsap.registerPlugin(ScrollTrigger)
 export default function HeroUI() {
   const heroAnimComplete = useAnimStore((s) => s.heroAnimComplete)
 
@@ -11,6 +13,7 @@ export default function HeroUI() {
   const line2Ref   = useRef(null)
   const dividerRef = useRef(null)
   const scrollRef  = useRef(null)
+  const containerRef = useRef(null)
 
   // Nav fades in quietly on mount regardless of watch animation
   useEffect(() => {
@@ -52,20 +55,33 @@ export default function HeroUI() {
       )
   }, [heroAnimComplete])
 
+  useEffect(() => {
+  gsap.to(containerRef.current, {
+    opacity: 0,
+    ease: 'none',
+    scrollTrigger: {
+      start: 'top top',
+      end: '+=300',
+      scrub: true,
+    }
+  })
+}, [])
+
   return (
     <div
+      
       className="fixed inset-0 pointer-events-none"
       style={{ zIndex: 10 }}
     >
 
       {/* ── Vignette ───────────────────────────────────────────── */}
-      <div
+      {/* <div
         className="absolute inset-0"
         style={{
           background: 'radial-gradient(ellipse at center, transparent 35%, rgba(0,0,0,0.7) 100%)',
           pointerEvents: 'none',
         }}
-      />
+      /> */}
 
       {/* ── Nav ───────────────────────────────────────────────── */}
       <nav
@@ -98,6 +114,7 @@ export default function HeroUI() {
 
       {/* ── Text block ────────────────────────────────────────── */}
       <div
+      ref={containerRef}
         className="absolute bottom-0 left-0 px-8 pb-12 md:px-12 md:pb-16"
         style={{ maxWidth: '520px' }}
       >

@@ -11,7 +11,9 @@ Title: mechanical watch mechanism
 import * as THREE from 'three'
 import React from 'react'
 import { useGLTF, useAnimations } from '@react-three/drei'
-import { GLTF } from 'three-stdlib'
+import type { GLTF } from 'three-stdlib'
+import { useEffect } from 'react'
+
 
 type ActionName = 'Scene'
 
@@ -57,9 +59,16 @@ type GLTFResult = GLTF & {
 }
 
 export function Model(props: JSX.IntrinsicElements['group']) {
-  const group = React.useRef<THREE.Group>()
-  const { nodes, materials, animations } = useGLTF('/models/mechanical-gear-transformed.glb') as GLTFResult
+  const group = React.useRef<THREE.Group | null>(null)
+  const { nodes, materials, animations } = useGLTF('/models/mechanical-gear-transformed.glb') as unknown as GLTFResult
   const { actions } = useAnimations(animations, group)
+
+  useEffect(() => {
+  const action = actions['Scene']
+  if (!action) return
+  action.setLoop(THREE.LoopRepeat, Infinity)
+  action.reset().play()
+}, [actions])
   return (
     <group ref={group} {...props} dispose={null}>
       <group name="Sketchfab_Scene">
