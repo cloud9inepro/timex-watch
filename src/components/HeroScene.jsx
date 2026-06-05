@@ -35,7 +35,7 @@ export default function HeroScene({ watchRef }) {
 
     baseY.current = settledY
 
-    gsap.timeline({ delay: 0.4 })
+    gsap.timeline({ delay: 0 })
 
       // ── Phase 1: entrance from back ──────────────────────────
       .to(watchRef.current.rotation, {

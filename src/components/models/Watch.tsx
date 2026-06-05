@@ -80,7 +80,7 @@ export function Model(props: JSX.IntrinsicElements['group']) {
         <mesh name="Object_14" geometry={nodes.Object_14.geometry} material={materials['indeksy.data']} position={[-0.044, -1.499, 6.624]} rotation={[-Math.PI / 2, 1.055, 0]} scale={3.575} />
         <mesh name="Object_16" geometry={nodes.Object_16.geometry} material={materials.indeksy} position={[0, -1.518, 6.652]} rotation={[Math.PI / 2, 0, 0]} scale={3.575} />
         <mesh name="Object_18" geometry={nodes.Object_18.geometry} material={materials.PaletteMaterial002} position={[0, -1.518, 7.11]} rotation={[Math.PI / 2, 0, 0]} scale={3.321} />
-        <mesh name="Object_40" geometry={nodes.Object_40.geometry} material={materials.PaletteMaterial003} position={[-0.203, -11.133, 1.283]} rotation={[0.101, 0, 0]} scale={[5.68, 3.468, 5.525]} />
+        {/* <mesh name="Object_40" geometry={nodes.Object_40.geometry} material={materials.PaletteMaterial003} position={[-0.203, -11.133, 1.283]} rotation={[0.101, 0, 0]} scale={[5.68, 3.468, 5.525]} /> */}
         <mesh name="Object_44" geometry={nodes.Object_44.geometry} material={materials.skora} position={[0, -7.304, 7.326]} rotation={[Math.PI / 2, 0, 0]} />
         <mesh name="Object_47" geometry={nodes.Object_47.geometry} material={materials['skora.jasna']} position={[0, -7.304, 7.326]} rotation={[Math.PI / 2, 0, 0]} />
         <mesh name="Object_56" geometry={nodes.Object_56.geometry} material={materials['indeksy.obrecz']} position={[0, -1.518, 6.876]} rotation={[Math.PI / 2, 0, 0]} scale={1.003} />

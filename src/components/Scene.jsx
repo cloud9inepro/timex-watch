@@ -8,7 +8,7 @@ export default function Scene() {
 
   return (
     <>
-      <color attach="background" args={['#050505']} />
+      {/* <color attach="background" args={['#050505']} /> */}
       {/* <fog attach="fog" args={['#050505', 18, 35]} /> */}
 
       {/* Ambient — barely there, keeps deep shadows */}

@@ -1,16 +1,19 @@
 import { Canvas } from '@react-three/fiber'
 import { Loader } from '@react-three/drei'
-import { Suspense, useEffect } from 'react'
+import { Suspense, useEffect, useRef } from 'react'
 import * as THREE from 'three'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Lenis from 'lenis'
 import Scene from './components/Scene'
 import HeroUI from './components/HeroUI'
+import SectionUI from './components/SectionUI'
 
 gsap.registerPlugin(ScrollTrigger)
 
 export default function App() {
+const bgRef = useRef(null)
+
 
   useEffect(() => {
     const lenis = new Lenis()
@@ -26,6 +29,36 @@ export default function App() {
     }
   }, [])
 
+  useEffect(() => {
+  ScrollTrigger.create({
+    trigger: '#case',
+    start: 'top 50%', end: 'bottom 50%',
+    onEnter:     () => gsap.to(bgRef.current, { backgroundColor: '#d4cfc9', duration: 0.8 }),
+    onLeaveBack: () => gsap.to(bgRef.current, { backgroundColor: '#000000', duration: 0.8 }),
+  })
+
+  ScrollTrigger.create({
+    trigger: '#dial',
+    start: 'top 50%', end: 'bottom 50%',
+    onEnter:     () => gsap.to(bgRef.current, { backgroundColor: '#1a1a1a', duration: 0.8 }),
+    onLeaveBack: () => gsap.to(bgRef.current, { backgroundColor: '#d4cfc9', duration: 0.8 }),
+  })
+
+  ScrollTrigger.create({
+    trigger: '#strap',
+    start: 'top 50%', end: 'bottom 50%',
+    onEnter:     () => gsap.to(bgRef.current, { backgroundColor: '#2c1f14', duration: 0.8 }),
+    onLeaveBack: () => gsap.to(bgRef.current, { backgroundColor: '#1a1a1a', duration: 0.8 }),
+  })
+
+  ScrollTrigger.create({
+    trigger: '#explode',
+    start: 'top 50%',
+    onEnter:     () => gsap.to(bgRef.current, { backgroundColor: '#000000', duration: 0.8 }),
+    onLeaveBack: () => gsap.to(bgRef.current, { backgroundColor: '#2c1f14', duration: 0.8 }),
+  })
+}, [])
+
   return (
     <>
     {/* Canvas outside scroll container — truly fixed */}
@@ -39,12 +72,13 @@ export default function App() {
     zIndex: 1,
   }}
       camera={{ position: [0, 0, 8], fov: 42 }}
-      gl={{ antialias: true }}
+      gl={{ antialias: true, alpha: true }}
       dpr={Math.min(window.devicePixelRatio, 1.5)}
       onCreated={({ gl }) => {
         gl.toneMapping = THREE.ACESFilmicToneMapping
         gl.toneMappingExposure = 1.1
         gl.outputColorSpace = THREE.SRGBColorSpace
+        gl.setClearColor(0x000000, 0) 
       }}
     >
       <Suspense fallback={null}>
@@ -54,10 +88,11 @@ export default function App() {
 
     <Loader />
     <HeroUI />
+    <SectionUI/>
 
     {/* Scroll spacers — only purpose is scroll height */}
-    <div className="relative" style={{ height: '850vh' }}>
-      <section id="hero"      className="h-screen pointer-events-none bg-white" />
+    <div ref={bgRef} className="relative" style={{ height: '850vh' }}>
+      <section id="hero"      className="h-screen pointer-events-none " />
       <section id="case"      className="h-screen pointer-events-none" />
       <section id="dial"      className="h-screen pointer-events-none" />
       <section id="strap"     className="h-screen pointer-events-none" />
