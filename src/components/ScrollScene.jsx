@@ -60,7 +60,7 @@ export default function ScrollScene({ watchRef }) {
                     start: 'top 100%',
                     end: 'bottom top',
                     // markers: true,
-                    scrub: 1,
+                    scrub: 2,
                 },
             })
                 .to(w.rotation, { x: 0, y: -2, z: 0 }, 0)

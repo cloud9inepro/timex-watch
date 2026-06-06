@@ -8,12 +8,14 @@ import Lenis from 'lenis'
 import Scene from './components/Scene'
 import HeroUI from './components/HeroUI'
 import SectionUI from './components/SectionUI'
+import StorySection from './components/StorySection'
+import ReviewsSection from './components/ReviewsSection'
 
 gsap.registerPlugin(ScrollTrigger)
 
 export default function App() {
-const bgRef = useRef(null)
-
+const bgRef = useRef<HTMLDivElement | null>(null)
+const canvasRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
     const lenis = new Lenis()
@@ -59,9 +61,65 @@ const bgRef = useRef(null)
   })
 }, [])
 
+
+    // Add to the section background ScrollTriggers useEffect:
+ScrollTrigger.create({
+  trigger: '#story',
+  start: 'top 60%',
+  onEnter:     () => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    gsap.to(canvas, { opacity: 0, duration: 0.6 })
+    canvas.style.pointerEvents = 'none'
+  },
+  onLeaveBack: () => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    gsap.to(canvas, { opacity: 1, duration: 0.6 })
+    canvas.style.pointerEvents = 'auto'
+  },
+})
+
+ScrollTrigger.create({
+  trigger: '#reviews',
+  start: 'top 60%',
+  onEnter: () => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    gsap.to(canvas, { opacity: 0, duration: 0.5 })
+    canvas.style.pointerEvents = 'none'
+  },
+  onLeaveBack: () => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    gsap.to(canvas, { opacity: 1, duration: 0.5 })
+    canvas.style.pointerEvents = 'auto'
+  },
+})
+
+ScrollTrigger.create({
+  trigger: '#explode',
+  start: 'top 60%',
+  onEnter:     () => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    gsap.to(canvas, { opacity: 1, duration: 0.6 })
+    canvas.style.pointerEvents = 'auto'
+  },
+  onLeaveBack: () => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    gsap.to(canvas, { opacity: 0, duration: 0.6 })
+    canvas.style.pointerEvents = 'none'
+  },
+})
+
   return (
     <>
     {/* Canvas outside scroll container — truly fixed */}
+    <div ref={canvasRef} style={{ position: 'fixed', inset: 0, zIndex: 1 }}>
+
+    
     <Canvas
        style={{
     position: 'fixed',
@@ -85,20 +143,23 @@ const bgRef = useRef(null)
         <Scene />
       </Suspense>
     </Canvas>
+    </div>
 
     <Loader />
     <HeroUI />
     <SectionUI/>
 
     {/* Scroll spacers — only purpose is scroll height */}
-    <div ref={bgRef} className="relative" style={{ height: '850vh' }}>
+    <div ref={bgRef} className="relative" /*style={{ height: '1100vh' }}*/>
       <section id="hero"      className="h-screen pointer-events-none " />
       <section id="case"      className="h-screen pointer-events-none" />
       <section id="dial"      className="h-screen pointer-events-none" />
       <section id="strap"     className="h-screen pointer-events-none" />
+      <StorySection />
+      <ReviewsSection />
       <section id="explode"   className="pointer-events-none" style={{ height: '150vh' }} />
       <section id="gear-zoom" className="pointer-events-none" style={{ height: '200vh' }} />
-      <section id="cta"       className="h-screen pointer-events-none" />
+      <section id="cta"       className="h-screen " />
     </div>
   </>
   )
