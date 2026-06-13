@@ -10,6 +10,7 @@ import HeroUI from './components/HeroUI'
 import SectionUI from './components/SectionUI'
 import StorySection from './components/StorySection'
 import ReviewsSection from './components/ReviewsSection'
+import CTASection from './components/CTASection'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -147,6 +148,13 @@ ScrollTrigger.create({
   },
 })
 
+ScrollTrigger.create({
+  trigger: '#cta',
+  start: 'top 80%',
+  onEnter:     () => hideCanvas(),
+  onLeaveBack: () => showCanvas(),
+})
+
   return (
     <>
     {/* Canvas outside scroll container — truly fixed */}
@@ -181,6 +189,7 @@ ScrollTrigger.create({
     <Loader />
     <HeroUI />
     <SectionUI/>
+  
 
     {/* Scroll spacers — only purpose is scroll height */}
     <div ref={bgRef} className="relative" /*style={{ height: '850vh' }}*/>
@@ -191,8 +200,8 @@ ScrollTrigger.create({
       <StorySection />
       <ReviewsSection />
       <section id="explode"   className="pointer-events-none" style={{ height: '150vh' }} />
-       <section id="movement"  className="pointer-events-none" style={{ height: '150vh' }} />
-      <section id="cta"       className="h-screen " />
+      <CTASection />
+      {/* <section id="cta"       className="h-screen " /> */}
     </div>
   </>
   )

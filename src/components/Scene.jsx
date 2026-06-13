@@ -3,12 +3,10 @@ import HeroScene from './HeroScene'
 import ScrollScene from './ScrollScene'
 import ExplodeScene from './ExplodeScene'
 import { useRef } from 'react'
-import { Model as Gear } from './models/MechanicalGear'
-import MovementScene from './MovementScene'
+
 
 export default function Scene() {
   const watchRef = useRef(null)
-  const gearRef  = useRef(null)
 
   return (
     <>
@@ -55,14 +53,10 @@ export default function Scene() {
       <Environment files="/blue.hdr" intensity={0.02} />
       <Preload all />
 
-      <HeroScene watchRef={watchRef} gearRef={gearRef} />
+      <HeroScene watchRef={watchRef} />
       <ScrollScene watchRef={watchRef} />
-      <ExplodeScene watchRef={watchRef} gearRef={gearRef} />
-      <MovementScene gearRef={gearRef} />
+      <ExplodeScene watchRef={watchRef} />
 
-        <group ref={gearRef} position={[20, 0, 0]} scale={[0, 0, 0]}>
-        <Gear />
-      </group>
     </>
   )
 }
