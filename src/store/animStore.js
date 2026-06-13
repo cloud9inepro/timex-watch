@@ -6,4 +6,7 @@ export const useAnimStore = create((set) => ({
 
    floatDisabled: false,
   disableFloat: () => set({ floatDisabled: true }),
+
+//   explodeActive: false,
+// setExplodeActive: (val) => set({ explodeActive: val }),
 }))

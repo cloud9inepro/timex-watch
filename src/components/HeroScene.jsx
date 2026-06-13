@@ -2,6 +2,7 @@ import { useRef, useEffect } from 'react'
 import { useFrame } from '@react-three/fiber'
 import gsap from 'gsap'
 import { Model as Watch } from './models/Watch'
+// import { Model as Gear } from './models/MechanicalGear'
 import { useAnimStore } from '../store/animStore'
 
 export default function HeroScene({ watchRef }) {
@@ -95,9 +96,20 @@ export default function HeroScene({ watchRef }) {
     watchRef.current.position.y = baseY.current + Math.sin(t * 0.65) * 0.055
   })
 
+//   const explodeActive = useAnimStore(s => s.explodeActive)
+
+// useEffect(() => {
+//   if (!watchRef.current) return
+//   watchRef.current.visible = !explodeActive
+// }, [explodeActive, watchRef])
+
   return (
     <group ref={watchRef}>
       <Watch />
+
+      {/* <group ref={gearRef} position={[0, -1.518, 6.1]} scale={[0, 0, 0]}>
+        <Gear />
+      </group> */}
     </group>
     
   )

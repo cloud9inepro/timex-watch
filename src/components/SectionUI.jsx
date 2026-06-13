@@ -170,7 +170,7 @@ function SectionPanel({ section }) {
       {/* Label */}
       <p
         ref={labelRef}
-        className="text-gray-500 mb-5 font-condensed tracking-[0.28em] text-[0.62rem] uppercase"
+        className="text-[#c5a45a] mb-5 font-condensed tracking-[0.28em] text-[0.62rem] uppercase"
       >
         &nbsp;
       </p>
@@ -217,7 +217,7 @@ function SectionPanel({ section }) {
         </span>
         <span
           ref={specDetailRef}
-          className="text-gray-500 font-condensed tracking-[0.22em] text-[0.62rem] uppercase block"
+          className="text-[#c5a45a] font-condensed tracking-[0.22em] text-[0.62rem] uppercase block"
         >
           {section.spec.detail}
         </span>
@@ -226,7 +226,7 @@ function SectionPanel({ section }) {
       {/* Body */}
       <p
         ref={bodyRef}
-        className="text-gray-400 font-condensed font-light leading-relaxed text-sm"
+        className="text-[#c5a45a] font-condensed font-light leading-relaxed text-sm"
         style={{ maxWidth: '260px' }}
       >
         {section.body}

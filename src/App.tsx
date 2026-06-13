@@ -63,38 +63,71 @@ const canvasRef = useRef<HTMLDivElement | null>(null)
 
 
     // Add to the section background ScrollTriggers useEffect:
+// ScrollTrigger.create({
+//   trigger: '#story',
+//   start: 'top 60%',
+//   onEnter:     () => {
+//     const canvas = canvasRef.current
+//     if (!canvas) return
+//     gsap.to(canvas, { opacity: 0, duration: 0.6 })
+//     canvas.style.pointerEvents = 'none'
+//   },
+//   onLeaveBack: () => {
+//     const canvas = canvasRef.current
+//     if (!canvas) return
+//     gsap.to(canvas, { opacity: 1, duration: 0.6 })
+//     canvas.style.pointerEvents = 'auto'
+//   },
+// })
+
+
+
+// ScrollTrigger.create({
+//   trigger: '#reviews',
+//   start: 'top 60%',
+//   onEnter: () => {
+//     const canvas = canvasRef.current
+//     if (!canvas) return
+//     gsap.to(canvas, { opacity: 0, duration: 0.5 })
+//     canvas.style.pointerEvents = 'none'
+//   },
+//   onLeaveBack: () => {
+//     const canvas = canvasRef.current
+//     if (!canvas) return
+//     gsap.to(canvas, { opacity: 1, duration: 0.5 })
+//     canvas.style.pointerEvents = 'auto'
+//   },
+// })
+
+
+const hideCanvas = () => {
+  const canvas = canvasRef.current
+  if (!canvas) return
+  gsap.to(canvas, { opacity: 0, duration: 0.5 })
+  canvas.style.pointerEvents = 'none'
+}
+
+const showCanvas = () => {
+  const canvas = canvasRef.current
+  if (!canvas) return
+  gsap.to(canvas, { opacity: 1, duration: 0.5 })
+  canvas.style.pointerEvents = 'auto'
+}
+
+// Canvas hides entering story (start of HTML zone)
 ScrollTrigger.create({
   trigger: '#story',
   start: 'top 60%',
-  onEnter:     () => {
-    const canvas = canvasRef.current
-    if (!canvas) return
-    gsap.to(canvas, { opacity: 0, duration: 0.6 })
-    canvas.style.pointerEvents = 'none'
-  },
-  onLeaveBack: () => {
-    const canvas = canvasRef.current
-    if (!canvas) return
-    gsap.to(canvas, { opacity: 1, duration: 0.6 })
-    canvas.style.pointerEvents = 'auto'
-  },
+  onEnter:     () => hideCanvas(),
+  onLeaveBack: () => showCanvas(),
 })
 
+// Canvas shows entering explode (back to 3D zone)
 ScrollTrigger.create({
-  trigger: '#reviews',
-  start: 'top 60%',
-  onEnter: () => {
-    const canvas = canvasRef.current
-    if (!canvas) return
-    gsap.to(canvas, { opacity: 0, duration: 0.5 })
-    canvas.style.pointerEvents = 'none'
-  },
-  onLeaveBack: () => {
-    const canvas = canvasRef.current
-    if (!canvas) return
-    gsap.to(canvas, { opacity: 1, duration: 0.5 })
-    canvas.style.pointerEvents = 'auto'
-  },
+  trigger: '#explode',
+  start: 'top 80%',
+  onEnter:     () => showCanvas(),
+  onLeaveBack: () => hideCanvas(),
 })
 
 ScrollTrigger.create({
@@ -150,7 +183,7 @@ ScrollTrigger.create({
     <SectionUI/>
 
     {/* Scroll spacers — only purpose is scroll height */}
-    <div ref={bgRef} className="relative" /*style={{ height: '1100vh' }}*/>
+    <div ref={bgRef} className="relative" /*style={{ height: '850vh' }}*/>
       <section id="hero"      className="h-screen pointer-events-none " />
       <section id="case"      className="h-screen pointer-events-none" />
       <section id="dial"      className="h-screen pointer-events-none" />
@@ -158,7 +191,7 @@ ScrollTrigger.create({
       <StorySection />
       <ReviewsSection />
       <section id="explode"   className="pointer-events-none" style={{ height: '150vh' }} />
-      <section id="gear-zoom" className="pointer-events-none" style={{ height: '200vh' }} />
+       <section id="movement"  className="pointer-events-none" style={{ height: '150vh' }} />
       <section id="cta"       className="h-screen " />
     </div>
   </>

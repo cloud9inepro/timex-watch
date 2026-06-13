@@ -127,8 +127,8 @@ export default function HeroUI() {
             fontSize: '0.65rem',
             letterSpacing: '0.28em',
             textTransform: 'uppercase',
-            color: '#aaaaaa',
-            fontWeight: 400,
+            color: '#c5a45a',
+            fontWeight: 900,
           }}
         >
           Expedition Scout Chronograph
@@ -175,13 +175,14 @@ export default function HeroUI() {
         {/* Scroll hint */}
         <p
           ref={scrollRef}
-          className="opacity-0 text-white"
+          className="opacity-0 text-black"
           style={{
             fontFamily: "'Barlow Condensed', sans-serif",
             fontSize: '0.62rem',
             letterSpacing: '0.25em',
             textTransform: 'uppercase',
             fontWeight: 300,
+            fontWeight: 900
           }}
         >
           Scroll to explore &nbsp;↓
