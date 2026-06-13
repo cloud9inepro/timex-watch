@@ -37,7 +37,7 @@ export default function CTASection() {
       ref={sectionRef}
       id="cta"
       className="relative min-h-screen flex flex-col items-center justify-center px-8 py-24 text-center"
-      style={{ background: '#0a0a0a' }}
+      style={{ background: '#0a0a0a', zIndex: 2, position: 'relative' }}
     >
       {/* Edition label */}
       <p
